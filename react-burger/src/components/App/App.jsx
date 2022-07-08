@@ -1,6 +1,6 @@
 import React from 'react';
 import pageStyle from './App.module.css';
-import AppHeader from '../header/AppHeader';
+import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import {arr, arrConstructor} from '../../utils/data';
