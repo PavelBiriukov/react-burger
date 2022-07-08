@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/constants';
 import styles from './BurgerConstructor.module.css';
 import ConstructorRow from '../СonstructorRow/СonstructorRow';
-import Ordering from '../Ordering__/Ordering__';
+import Ordering from '../Ordering/Ordering';
 
 export default function BurgerConstructor({data}) {
 
