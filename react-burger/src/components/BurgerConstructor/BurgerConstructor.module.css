@@ -1,0 +1,27 @@
+.constructor {
+    padding-top: 100px;
+    padding-bottom: 52px;
+}
+
+.fills {
+  margin: 0;
+  padding: 0 8px 0 16px;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.fills::-webkit-scrollbar {
+    width: 8px;
+}
+
+.fills::-webkit-scrollbar-thumb {
+  border: none;
+  border-radius: 0;
+}
+
+.elements {
+  height: calc(100vh - 344px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
