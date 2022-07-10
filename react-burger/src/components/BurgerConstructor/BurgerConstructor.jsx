@@ -7,8 +7,11 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesConstructor from './BurgerConstructor.module.css';
 
+
+
+
 const BurgerConstructor  = (props) => {
-  let summa = 0;
+  let amount  = 0;
 
   return (
     <section className={`${stylesConstructor.constructor} mt-25 ml-10`}>
@@ -24,7 +27,7 @@ const BurgerConstructor  = (props) => {
       <div className={`${stylesConstructor.topings}`}>
         {props.state.data.map((el) => {
           if (el.type === "main" || el.type === "sauce") {
-            summa = summa + el.price;
+            amount  = amount  + el.price;
             return (
               <div className={`${stylesConstructor.ingredient}`} key={el._id}>
                 <DragIcon type="primary" />
@@ -48,7 +51,7 @@ const BurgerConstructor  = (props) => {
       </div>
       <div className={`${stylesConstructor.order} mt-6`}>
         <p className={`text text_type_digits-medium`}>
-          {`${summa / 2 + 400}`}
+          {`${amount  / 2 + 400}`}
           <span className='ml-2'><CurrencyIcon type="primary" /></span>
         </p>
         <Button type="primary" size="large" onClick={() => {props.setActive(true)}}>

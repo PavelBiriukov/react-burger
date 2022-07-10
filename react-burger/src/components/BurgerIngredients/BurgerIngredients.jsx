@@ -64,10 +64,18 @@ const BurgerIngredients = (props) => {
 }
 
 BurgerIngredients.propTypes = {
-    state: PropTypes.object,
-    active: PropTypes.bool,
-    setActive: PropTypes.func,
-    setData: PropTypes.func,
-    key: PropTypes.string
+  state: PropTypes.object,
+  active: PropTypes.bool,
+  setActive: PropTypes.func,
+  setData: PropTypes.func,
+  key: PropTypes.string
 }
+/* Так ? 
+BurgerIngredients.propTypes ={
+  data: PropTypes.arrayOf(PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired
+  }).isRequired
+  ).isRequired
+} */
 export default BurgerIngredients;

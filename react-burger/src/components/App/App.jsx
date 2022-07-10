@@ -16,14 +16,10 @@ function App() {
     data: []
   });
   React.useEffect(() => {
-    getElement();
-  }, []);
-
-  const getElement = () => {
     getIngredients()
       .then(result => setState(result))
-      .catch(e => console.error(e))
-    }
+      .catch(e => state(e))
+  }, []);
 
   return (
     <div className={StylesApp.page}>
