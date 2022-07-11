@@ -1,0 +1,33 @@
+.constructor {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+}
+
+::-webkit-scrollbar {
+  width: 8px; /* ширина для вертикального скролла */
+  background-color: #2F2F37;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  height: 292px;
+}
+.topings {
+  max-height: 500px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.ingredient {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.order {
+  display: flex;
+  align-items: center;
+  gap: 41px;
+  justify-content: flex-end;
+}
