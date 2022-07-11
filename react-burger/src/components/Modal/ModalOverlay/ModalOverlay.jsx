@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 
 const ModalOverlay = (props) => {
   React.useEffect(() => {
+    const ECK_KEYCODE = 27;
     const close = (e) => {
-      if (e.keyCode === 27) {
+      if (e.keyCode === ECK_KEYCODE) {
         props.setActive(false)
       }
     }

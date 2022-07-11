@@ -5,7 +5,7 @@ import {
 import stylesIngredients from './BurgerIngredients.module.css';
 import CardIngredients from '../CardIngredients/CardIngredients';
 import PropTypes from 'prop-types';
-
+import {ingredientPropType} from '../../utils/constants'
 
 const BurgerIngredients = (props) => {
   const [current, setCurrent] = React.useState('one');
@@ -64,18 +64,6 @@ const BurgerIngredients = (props) => {
 }
 
 BurgerIngredients.propTypes = {
-  state: PropTypes.object,
-  active: PropTypes.bool,
-  setActive: PropTypes.func,
-  setData: PropTypes.func,
-  key: PropTypes.string
+  props: PropTypes.objectOf(PropTypes.arrayOf(ingredientPropType.isRequired))
 }
-/* Так ? 
-BurgerIngredients.propTypes ={
-  data: PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.string.isRequired,
-    _id: PropTypes.string.isRequired
-  }).isRequired
-  ).isRequired
-} */
 export default BurgerIngredients;
