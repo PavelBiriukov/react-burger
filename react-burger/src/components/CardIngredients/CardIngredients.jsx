@@ -5,21 +5,22 @@ import {
   CurrencyIcon,
   Counter
 } from '@ya.praktikum/react-developer-burger-ui-components';
-const CardIngredients = ({ props }) => {
+const CardIngredients = (props) => {
   return (
-    <div className={`${stylesCardIngredients.card} `}>
-      <img src={props.image} alt={props.name} className={`${stylesCardIngredients.img} mr-4 ml-4`} />
-        <Counter count={1} size="small" className={stylesCardIngredients.counter}/>
+    <div className={`${stylesCardIngredients.card} `} onClick={() => {props.setActive(true); props.setData(props.card)}}>
+      <img src={props.card.image} alt="" className={`${stylesCardIngredients.img} mr-4 ml-4`} />
+      <Counter count={1} size="small" className={stylesCardIngredients.counter} />
       <p className={`${stylesCardIngredients.price} text text_type_digits-default mt-1 mb-1`}>
-        {props.price}
+        {props.card.price}
         <span className='ml-2'><CurrencyIcon type="primary" /></span>
       </p>
-      <p className={`${stylesCardIngredients.name} text text_type_main-default`}>{props.name}</p>
+      <p className={`${stylesCardIngredients.name} text text_type_main-default`}>{props.card.name}</p>
     </div>
   )
 }
 
 CardIngredients.propTypes = {
-  props: PropTypes.object.isRequired
+    active: PropTypes.bool,
+    setActive: PropTypes.func
 }
 export default CardIngredients;
