@@ -1,0 +1,36 @@
+.section {
+  max-width: 600px;
+}
+::-webkit-scrollbar {
+  width: 8px; /* ширина для вертикального скролла */
+  background-color: #2F2F37;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  height: 492px;
+}
+.list {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+}
+
+.cards {
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  max-height: 756px;
+}
+.cardsItem {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 32px 24px;
+  cursor: pointer;
+}
+
+.cardsItem:ntg {
+  justify-self: start;
+}

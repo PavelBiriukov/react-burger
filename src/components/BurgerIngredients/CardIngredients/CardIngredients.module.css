@@ -1,0 +1,14 @@
+.card {
+  max-width: 272px;
+  position: relative;
+  list-style-type: none;
+}
+
+.price {
+  display: flex;
+  justify-content: center;
+}
+
+.name {
+  text-align: center;
+}
