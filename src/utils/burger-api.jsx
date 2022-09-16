@@ -1,5 +1,4 @@
-import { URL_API } from './URL'
-import { URL_ORDERS } from './URL'
+import {URL_API} from './URL'
 
 
 export const checkReponse = (res) => {
@@ -8,18 +7,5 @@ export const checkReponse = (res) => {
 
 export function getIngredients() {
   return fetch(URL_API)
-    .then(res => checkReponse(res))
-}
-
-export function getOrders(id) {
-  return fetch(URL_ORDERS, {
-    method: 'POST',
-    body: JSON.stringify({
-      ingredients: id
-    }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-    .then(res => checkReponse(res))
+   .then(res => checkReponse(res))
 }
