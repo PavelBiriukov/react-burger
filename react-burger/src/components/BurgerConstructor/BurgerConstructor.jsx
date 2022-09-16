@@ -1,42 +1,68 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/constants';
-import styles from './BurgerConstructor.module.css';
-import ConstructorRow from '../СonstructorRow/СonstructorRow';
-import Ordering from '../Ordering/Ordering';
+import {
+  ConstructorElement,
+  DragIcon,
+  Button,
+  CurrencyIcon
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import stylesConstructor from './BurgerConstructor.module.css';
 
-export default function BurgerConstructor({data}) {
 
-  const [totalPrice, setTotalPrice] = React.useState(null);
 
-  React.useEffect(() => {
-    const sum = data.reduce((prev, item) => {
-      return prev + item.price;
-    }, 0);
 
-    setTotalPrice(sum);
-
-  },[JSON.stringify(data)])
+const BurgerConstructor  = (props) => {
+  let amount  = 0;
 
   return (
-    <section className={styles.constructor}>
-      <div className={styles.elements}>
-        <ConstructorRow isBun={true} type='top' data={data[0]} />
-        <ul className={`${styles.fills} custom-scroll`}>
-          {data.map((ing, pos, array) => {
-            if(pos > 0 && (pos !== array.length - 1)) {
-              return (<ConstructorRow key={ing._id} data={ing} />);
-            }
-            return null;
-          })}
-        </ul>
-        <ConstructorRow isBun={true} type='bottom' data={data[0]} />
+    <section className={`${stylesConstructor.constructor} mt-25 ml-10`}>
+      <div className={`${stylesConstructor.ingredient} ml-8`}>
+        <ConstructorElement
+          type="top"
+          isLocked={true}
+          text="Краторная булка N-200i (верх)"
+          price={200}
+          thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
+        />
       </div>
-      <Ordering total={totalPrice} />
+      <div className={`${stylesConstructor.topings}`}>
+        {props.state.data.map((el) => {
+          if (el.type === "main" || el.type === "sauce") {
+            amount  = amount  + el.price;
+            return (
+              <div className={`${stylesConstructor.ingredient}`} key={el._id}>
+                <DragIcon type="primary" />
+                <ConstructorElement
+                  text={el.name}
+                  price={el.price}
+                  thumbnail={el.image}
+                />
+              </div>)
+          }
+        })}
+      </div>
+      <div className={`${stylesConstructor.ingredient} ml-8`}>
+        <ConstructorElement
+          type="bottom"
+          isLocked={true}
+          text="Краторная булка N-200i (низ)"
+          price={200}
+          thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
+        />
+      </div>
+      <div className={`${stylesConstructor.order} mt-6`}>
+        <p className={`text text_type_digits-medium`}>
+          {`${amount  / 2 + 400}`}
+          <span className='ml-2'><CurrencyIcon type="primary" /></span>
+        </p>
+        <Button type="primary" size="large" onClick={() => {props.setActive(true)}}>
+          Оформить заказ
+        </Button>
+      </div>
     </section>
   )
 }
-
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropTypes.isRequired)
+    state: PropTypes.object,
+    setActive: PropTypes.func
 }
+export default BurgerConstructor;
