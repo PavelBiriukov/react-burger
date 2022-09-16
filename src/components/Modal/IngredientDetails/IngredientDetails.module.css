@@ -1,0 +1,21 @@
+
+.title {
+  align-self: start;
+}
+
+.list {
+  display: flex;
+  padding: 0;
+}
+.listItem {
+  text-align: center;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.img {
+  margin: 0;
+  width: 480px;
+  height: 240px;
+}

@@ -19,6 +19,7 @@
 }
 
 .cards {
+  scroll-behavior: smooth;
   overflow-y: scroll;
   max-height: 756px;
 }

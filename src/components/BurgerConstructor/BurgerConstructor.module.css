@@ -6,13 +6,16 @@
 }
 
 ::-webkit-scrollbar {
-  width: 8px; /* ширина для вертикального скролла */
+  width: 8px;
+  /* ширина для вертикального скролла */
   background-color: #2F2F37;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: #8585AD;
   height: 292px;
 }
+
 .topings {
   max-height: 500px;
   overflow-y: scroll;
@@ -20,14 +23,48 @@
   flex-direction: column;
   gap: 16px;
 }
+
 .ingredient {
   display: flex;
   align-items: center;
   gap: 16px;
 }
+
 .order {
   display: flex;
   align-items: center;
   gap: 41px;
   justify-content: flex-end;
+}
+
+.bun {
+  margin: 0 auto;
+  padding: 25px 75px;
+  background: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%);
+  border-radius: 50px;
+  font-family: 'Jet Brains Mono';
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: normal;
+  position: relative;
+  z-index: 100;
+}
+.bun::after {
+  content: "";
+  border-radius: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%);
+  filter: blur(25px);
+  transform-origin: center center;
+  animation: pulse-shadow 1s linear infinite alternate;
+  z-index: -1;
+}
+
+@keyframes pulse-shadow {
+  0% { transform: scale(1);}
+  100% { transform: scale(1.1);}
 }

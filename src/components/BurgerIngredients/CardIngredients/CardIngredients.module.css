@@ -1,13 +1,9 @@
 .card {
   max-width: 272px;
   position: relative;
+  list-style-type: none;
 }
-.img {
 
-}
-.counter {
-
-}
 .price {
   display: flex;
   justify-content: center;

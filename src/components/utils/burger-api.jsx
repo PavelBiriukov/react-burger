@@ -1,5 +1,4 @@
-import { URL_API } from './URL'
-import { URL_ORDERS } from './URL'
+const baseURL = 'https://norma.nomoreparties.space/api/'
 
 
 export const checkReponse = (res) => {
@@ -7,12 +6,12 @@ export const checkReponse = (res) => {
 };
 
 export function getIngredients() {
-  return fetch(URL_API)
+  return fetch(`${baseURL}ingredients`)
     .then(res => checkReponse(res))
 }
 
-export function getOrders(id) {
-  return fetch(URL_ORDERS, {
+export function getOrder(id) {
+  return fetch(`${baseURL}orders`, {
     method: 'POST',
     body: JSON.stringify({
       ingredients: id
@@ -23,3 +22,4 @@ export function getOrders(id) {
   })
     .then(res => checkReponse(res))
 }
+

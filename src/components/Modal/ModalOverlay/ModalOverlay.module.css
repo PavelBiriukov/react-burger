@@ -10,9 +10,9 @@
   align-items: center;
   opacity: 0;
   pointer-events: none;
-  transition: all .3s ease-in-out;
 }
 .popup.active {
   pointer-events: all;
+
   opacity: 1;
 }

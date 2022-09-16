@@ -6,30 +6,45 @@ import {
 import stylesModalDetails from './Modal.module.css';
 import ModalOverlay from './ModalOverlay/ModalOverlay';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import Loader from '../utils/Loader/Loader';
 const modalRoot = document.querySelector('#modal');
 
-const Modal = (props) => {
+const Modal = ({ active, setActive, children }) => {
+  const load = useSelector(store => store.orderDetailsReduser.loader)
+
   React.useEffect(() => {
     const close = (e) => {
-      if (e.keyCode === 27) {
-        props.setActive(false)
+      if (e.key === 'Escape') {
+        setActive(false);
       }
     }
     window.addEventListener('keydown', close);
     return () => window.removeEventListener('keydown', close);
-  }, [])
+  }, []);
+
   return ReactDOM.createPortal(
+
     <>
-      <div className={props.active ? `${stylesModalDetails.container} ${stylesModalDetails.active}` : `${stylesModalDetails.container}`}
-        >
-        <button className={`${stylesModalDetails.close} mt-7 mr-5`} onClick={() => props.setActive(false)}>
-          <CloseIcon type="primary" />
-        </button>
-        {props.children}
-      </div>
-      <ModalOverlay active={props.active} setActive={props.setActive} onClick={() => props.setActive(false)}></ModalOverlay>
+      {load ?
+        (<>
+          <Loader/>
+          <ModalOverlay active={active} setActive={setActive} closePopup={() => {}}></ModalOverlay>
+          </>
+        )
+        : (
+          <>
+            <div className={active ? `${stylesModalDetails.container} ${stylesModalDetails.active}` : `${stylesModalDetails.container}`}>
+              <button className={`${stylesModalDetails.close} mt-7 mr-5`} onClick={() => { setActive(false)}}>
+                <CloseIcon type="primary" />
+              </button>
+              {children}
+            </div>
+            <ModalOverlay active={active} setActive={setActive} closePopup={() => { setActive(false)}}></ModalOverlay>
+          </>)}
     </>
-    , modalRoot)
+    , modalRoot
+  )
 }
 
 Modal.propTypes = {
@@ -37,3 +52,4 @@ Modal.propTypes = {
   setActive: PropTypes.func
 }
 export default Modal;
+
