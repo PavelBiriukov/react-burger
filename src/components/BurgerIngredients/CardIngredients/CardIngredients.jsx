@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import stylesCardIngredients from './CardIngredients.module.css';
 import PropTypes from 'prop-types';
 import {
@@ -7,7 +7,6 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMemo } from 'react';
 import { POPUP_ITEM } from '../../../services/action/IngredientDetailsAction';
 
 const CardIngredients = ({ card, setActive }) => {
@@ -29,8 +28,7 @@ const CardIngredients = ({ card, setActive }) => {
       item: item
     })
   }
-  const counter = useMemo(
-    () =>
+  const counter = useCallback(
       (count = 0) => {
         for (let item of ingredients) {
           if (item.card._id === card._id) count++;
@@ -49,10 +47,10 @@ const CardIngredients = ({ card, setActive }) => {
       }
     >
       <img src={card.image}
-        alt="`${card.name}`"
+        alt={card.name}
         className={`${stylesCardIngredients.img} mr-4 ml-4`}
       />
-      {counter() > 0 &&
+      {counter > 0 &&
         <Counter count={counter()} size="small" className={stylesCardIngredients.counter} />
       }
       <p className={`${stylesCardIngredients.price} text text_type_digits-default mt-1 mb-1`}>

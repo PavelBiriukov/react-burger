@@ -34,6 +34,7 @@ export const orderDetailsReduser = ( state = initialState, action ) => {
     }
     case LOADER: {
       return {
+        ...state,
         loader: true
       }
     }

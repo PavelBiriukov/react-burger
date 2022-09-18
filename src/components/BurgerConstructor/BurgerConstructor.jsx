@@ -32,14 +32,14 @@ const BurgerConstructor = ({ setActive }) => {
   })
 
 
-  let burgerId = useMemo(() => allIngredients.map((item) => item.card._id), [allIngredients]);
+  const burgerId = useMemo(() => allIngredients.map((item) => item.card._id), [allIngredients]);
   const orderDispatch = (id) => {
     dispatch(getOrderAction(id))
   }
 
   useEffect(() => {
 
-    const ingredientsPrice = ingredients.reduce((sum, item) => +sum + item.card.price, []);
+    const ingredientsPrice = ingredients.reduce((sum, item) => +sum + item.card.price, 0);
     const bunPrice = bun[0] ? bun[0].card.price * 2 : 0;
     const totalPrice = bunPrice + ingredientsPrice;
     setTotal(totalPrice)
