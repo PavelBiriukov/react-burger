@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import stylesCardIngredients from './CardIngredients.module.css';
 import PropTypes from 'prop-types';
 import {
@@ -28,8 +28,9 @@ const CardIngredients = ({ card, setActive }) => {
       item: item
     })
   }
-  const counter = useCallback(
-      (count = 0) => {
+  const counter = useMemo(
+      () => {
+        let count = 0
         for (let item of ingredients) {
           if (item.card._id === card._id) count++;
         }
@@ -51,7 +52,7 @@ const CardIngredients = ({ card, setActive }) => {
         className={`${stylesCardIngredients.img} mr-4 ml-4`}
       />
       {counter > 0 &&
-        <Counter count={counter()} size="small" className={stylesCardIngredients.counter} />
+        <Counter count={counter} size="small" className={stylesCardIngredients.counter} />
       }
       <p className={`${stylesCardIngredients.price} text text_type_digits-default mt-1 mb-1`}>
         {card.price}
