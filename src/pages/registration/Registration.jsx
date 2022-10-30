@@ -9,7 +9,9 @@ import { useForm } from '../../utils/hooks/useForm';
 
 const Registration = () => {
   const inLogin = useSelector(store => store.authReducer.inLogin);
+  const loader = useSelector(store => store.authReducer.loader);
   const location = useLocation();
+
   const dispatch = useDispatch();
   
   const inputRef = React.useRef(null);
@@ -29,7 +31,7 @@ const Registration = () => {
     );
   }
   return (
-    <LoaderAuth >
+    <LoaderAuth loader={loader}>
       <section className={style.container}>
         <h2 className={'text text_type_main-medium'}>Регистрация</h2>
         <form className={style.form} onSubmit={(e) => newUser(e, email, password, name)}>

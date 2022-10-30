@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   ConstructorElement,
   Button,
@@ -13,9 +12,10 @@ import { ADD_INGREDIENT } from '../../services/action/constructorAction';
 import BurgerConstructorItem from './BurgerConstrucntorItem/BurgerConstructorItem';
 import { getOrderAction } from '../../services/action/orderDetailsAction';
 import { useHistory } from 'react-router-dom';
+import { POPUP_ORDER } from '../../services/action/popupAction';
 
 
-const BurgerConstructor = ({ setActive }) => {
+const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const ingredients = useSelector(store => store.constructorReducer.feed);
   const allIngredients = useSelector(store => store.constructorReducer.ingredients);
@@ -37,11 +37,6 @@ const BurgerConstructor = ({ setActive }) => {
 
   let burgerId = useMemo(() => allIngredients.map((item) => item.card._id), [allIngredients]);
 
-  
-  const orderDispatch = useCallback((id) => {
-    dispatch(getOrderAction(id))
-  }, [dispatch])
-
   useEffect(() => {
     const ingredientsPrice = ingredients.reduce((sum, item) => +sum + item.card.price, []);
     const bunPrice = bun[0] ? bun[0].card.price * 2 : 0;
@@ -49,12 +44,16 @@ const BurgerConstructor = ({ setActive }) => {
     setTotal(totalPrice)
   }, [ingredients, bun])
 
+  const orderDispatch = useCallback((id) => {
+    dispatch(getOrderAction(id))
+  }, [dispatch])
+
   const checkAuthUser = () => {
     if (!inLogin) {
       history.push('/login')
     } else {
       orderDispatch(burgerId);
-      setActive(true);
+      dispatch({type: POPUP_ORDER})
     }
   }
 
@@ -119,7 +118,5 @@ const BurgerConstructor = ({ setActive }) => {
     </section>
   )
 }
-BurgerConstructor.propTypes = {
-  setActive: PropTypes.func
-}
+
 export default React.memo(BurgerConstructor);

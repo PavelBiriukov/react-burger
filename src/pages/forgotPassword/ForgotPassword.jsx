@@ -10,6 +10,7 @@ import { useForm } from '../../utils/hooks/useForm';
 const ForgotPassword = () => {
   const resetEmailSuccess = useSelector(store => store.authReducer.resetEmailSuccess);
   const inLogin = useSelector(store => store.authReducer.inLogin);
+  const loader = useSelector(store => store.authReducer.loader);
   
   const emailRef = React.useRef(null)
   const location = useLocation();
@@ -22,14 +23,14 @@ const ForgotPassword = () => {
     setValues({});
     dispatch(resetPasswordEmailAction(email));
   }
-  console.log(email)
+
   if (inLogin) {
     return (
       <Redirect to={location.state?.from || '/'} />
     );
   }
   return (
-    <LoaderAuth>
+    <LoaderAuth loader={loader}>
       <section className={style.container}>
         <h2 className={'text text_type_main-medium'}>Восстановление пароля</h2>
         <form className={style.form} onSubmit={(e) => { addEmail() }}>
@@ -37,10 +38,10 @@ const ForgotPassword = () => {
             <Input
               type={'email'}
               placeholder={'Укажите e-mail'}
-              onChange={(e) => { handleChange(e) }}
+              onChange={(e) => { handleChange() }}
               icon={undefined}
               value={email || ''}
-              name={'email'}
+              name={'Email'}
               error={false}
               ref={emailRef}
               onIconClick={undefined}

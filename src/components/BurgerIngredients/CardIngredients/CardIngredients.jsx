@@ -10,8 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import { POPUP_ITEM } from '../../../services/action/IngredientDetailsAction';
 import { Link, useLocation } from 'react-router-dom';
+import { POPUP_ITEM_INFO } from '../../../services/action/popupAction';
 
-const CardIngredients = ({ card, setActive }) => {
+const CardIngredients = ({ card }) => {
   const ingredients = useSelector(store => store.constructorReducer.feed);
   const bun = useSelector(store => store.constructorReducer.bun);
   const location = useLocation();
@@ -25,13 +26,20 @@ const CardIngredients = ({ card, setActive }) => {
     })
   })
 
+
+  const openPopup = () => {
+    dispatch({
+      type: POPUP_ITEM_INFO
+    })
+  }
+
   const getItemInfo = useCallback((item) => {
     dispatch({
       type: POPUP_ITEM,
       item: item
     })
   }, [dispatch])
-
+  
   const counter = useMemo(
     () =>
       (count = 0) => {
@@ -50,14 +58,14 @@ const CardIngredients = ({ card, setActive }) => {
       to={{
         pathname: `/ingredients/${card._id}`,
         state: { background: location }
-      }} >
+      }} 
+      onClick={
+        () => { openPopup()  }
+      }>
 
       <li className={`${stylesCardIngredients.card} `}
         ref={dragRef}
         style={{ opacity }}
-        onClick={
-          () => { setActive(true); getItemInfo(card) }
-        }
       >
         <img src={card.image}
           alt="`${card.name}`"
@@ -77,7 +85,6 @@ const CardIngredients = ({ card, setActive }) => {
 }
 
 CardIngredients.propTypes = {
-  card: PropTypes.object,
-  setActive: PropTypes.func
+  card: PropTypes.object
 }
 export default React.memo(CardIngredients);

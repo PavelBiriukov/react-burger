@@ -1,51 +1,42 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import style from './Profile.module.css'
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeUserInfoAction, logoutUserAction } from '../../services/action/authAction';
 import { LoaderAuth } from '../../utils/Loader/Loader';
 import { useForm } from '../../utils/hooks/useForm';
+import { ProfileForm } from '../../components/ProfileForm/ProfileForm';
+import { ProtectedRoute } from '../../components/protectedRoute/protectedRoute';
+import { Orders } from '../../components/Orders/Orders';
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_CLOSED_AUTH, WS_CONNECTION_START, WS_CONNECTION_START_AUTH } from '../../services/action/wsActions';
 
 const Profile = () => {
-  const user = useSelector(store => store.authReducer.user);
-  const dispatch = useDispatch();
-  let [showPassword, setShowPassword] = React.useState(false);
+  const orders = useSelector(store => store.wsReduser.myOrders);
+  const loader = useSelector(store => store.authReducer.loader);
+  const inLogin = useSelector(store => store.authReducer.inLogin);
 
-  const { values, handleChange, setValues } =
-    useForm({
-      email: user.email,
-      name: user.name,
-      password: ''
-    });
-  const { email, password, name } = values
+  const reverceOrders = orders?.sort((a, b) => {
+    if (a.number < b.number) {
+      return 1
+    } else {
+      return -1
+    }
+  })
 
-  const nameRef = React.useRef(null);
-  const loginRef = React.useRef(null);
-  const passwordRef = React.useRef(null);
+  const dispatch = useDispatch()
 
-  const onSubmit = (e) => {
-    setValues({});
-    dispatch(changeUserInfoAction(email, name, password))
+  const handleLogout = () => {
+    dispatch(logoutUserAction());
   };
 
-  const handleLogout = useCallback(() => {
-    dispatch(logoutUserAction());
-  }, [dispatch]);
-
-  const onIconClick = (ref) => { ref.current.focus() };
-  const onShowPassword = () => { setShowPassword(showPassword ? showPassword = false : showPassword = true) };
-
-  const resetInfo = () => {
-    setValues({
-      email: user.email,
-      name: user.name,
-      password: ''
-    })
-  }
-
+  useEffect(() => {
+    dispatch({ type: WS_CONNECTION_START_AUTH });
+    return () => dispatch({ type: WS_CONNECTION_CLOSED_AUTH });
+  }, [inLogin]);
+  
   return (
-    <LoaderAuth>
+    <LoaderAuth loader={loader}>
       <section className={style.container}>
         <nav className={style.navigation}>
           <ul className={`${style.ul} mb-20`}>
@@ -53,13 +44,15 @@ const Profile = () => {
               <NavLink
                 to='/profile'
                 className={`${style.link} text text_type_main-medium text_color_inactive`}
-                activeClassName={style.activeLink}>
+                activeClassName={style.activeLink}
+                exact>
                 Профиль
               </NavLink>
             </li>
             <li className={`${style.list} `}>
               <NavLink
                 to='/profile/orders'
+                exact
                 className={`${style.link} text text_type_main-medium text_color_inactive`}
                 activeClassName={style.activeLink}>
                 История заказов
@@ -79,62 +72,12 @@ const Profile = () => {
             В&nbsp;этом разделе вы&nbsp;можете изменить&nbsp; свои данные
           </p>
         </nav>
-        <form className={style.form} onSubmit={e => onSubmit(e)}>
-          <div className={`${style.wrapper}`}>
-            <Input
-              type={'text'}
-              placeholder={'Имя'}
-              onChange={(e) => { handleChange(e) }}
-              icon={'EditIcon'}
-              value={name || ''}
-              name={'name'}
-              error={false}
-              ref={nameRef}
-              onIconClick={() => onIconClick(nameRef)}
-              errorText={'Ошибка'}
-              size={undefined}
-            />
-          </div>
-          <div className={`${style.wrapper} mt-6`}>
-            <Input
-              type={'email'}
-              placeholder={'Логин'}
-              onChange={(e) => { handleChange(e) }}
-              icon={'EditIcon'}
-              value={email || ''}
-              name={'email'}
-              error={false}
-              ref={loginRef}
-              onIconClick={() => onIconClick(loginRef)}
-              errorText={'Ошибка'}
-              size={undefined} />
-          </div>
-          <div className={`${style.wrapper} mt-6 mb-6`} >
-            <Input
-              type={showPassword ? 'text' : 'password'}
-              placeholder={'Пароль'}
-              onChange={(e) => { handleChange(e) }}
-              icon={showPassword ? 'HideIcon' : 'ShowIcon'}
-              value={password || ''}
-              name={'password'}
-              error={false}
-              ref={passwordRef}
-              onIconClick={() => onShowPassword(passwordRef)}
-              errorText={'Ошибка'}
-              size={undefined}
-            />
-          </div>
-          <div className={style.btns}>
-            <Button type="secondary" size="large" onClick={resetInfo}>
-              Отмена
-            </Button>
-            <Button type="primary" size="large" >
-              Сохранить
-            </Button>
-          </div>
-        </form>
-
-
+        <ProtectedRoute path="/profile" exact>
+          <ProfileForm />
+        </ProtectedRoute>
+        <ProtectedRoute path="/profile/orders" exact>
+          <Orders orders={reverceOrders} />
+        </ProtectedRoute>
       </section>
     </LoaderAuth>
   );

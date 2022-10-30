@@ -9,9 +9,10 @@ import thunk from 'redux-thunk';
 import { rootReducer } from './services/reducers/rootReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { BrowserRouter as Router } from 'react-router-dom';
-const enhancer = composeWithDevTools(applyMiddleware(thunk));
+import { initialStore } from './services/store';
 
-const store = createStore(rootReducer, enhancer);
+
+const store = initialStore();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -1,4 +1,4 @@
-export function setCookie(name, value, {props}) {
+export function setCookie(name, value, { props }) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
@@ -34,3 +34,31 @@ export function getCookie(name) {
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
+
+function setDay(day) {
+  if (day === 0) {
+    return 'сегoдня'
+  };
+  if (day === 1) {
+    return 'вчера'
+  };
+  if ( day > 1 && day < 5 ) {
+    return `${day} дня назад`
+  } 
+  if ( (day % 10 > 1) && (day % 10 <= 5) && (day > 20)) {
+    return `${day} дня назад`
+  }
+  if ( (day % 10 === 1) && (day > 20)) {
+    return `${day} день назад`
+  }
+ return `${day} дней назад`
+}
+export function setDate(date) {
+  const dateTime = date?.slice(11, 16);
+  const dateYearMonthDay = date?.slice(0, 10);
+  const dateNew = new Date;
+  const dateDayMS = dateNew - Date.parse(dateYearMonthDay);
+  const dateDay = Math.floor(dateDayMS / 3600 / 24 / 1000);
+  const newFormatDay = setDay(dateDay)
+  return `${newFormatDay} ${dateTime} i-GMT+3`
+} 

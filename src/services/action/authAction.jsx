@@ -14,6 +14,7 @@ export const USER_RESET_EMAIL_SUCCESS = 'USER_RESET_EMAIL_SUCCESS';
 export const USER_RESET_EMAIL_FAILED = 'USER_RESET_EMAIL_FAILED';
 export const USER_CHANGE_SUCCESS = 'USER_CHANGE_SUCCESS';
 export const USER_CHANGE_FAILED = 'USER_CHANGE_FAILED';
+export const UPDATE_TOKEN = 'UPDATE_TOKEN';
 
 export const GET_REGISTER_SUCCESS = 'GET_REGISTER_SUCCESS';
 export const GET_REGISTER_FAILED = 'GET_REGISTER_FAILED';
@@ -30,7 +31,7 @@ export const registerUserAction = (email, password, name) => {
       .then(res => {
         const accessToken = res.accessToken.split('Bearer ')[1];
         const refreshToken = res.refreshToken;
-        setCookie('token', accessToken, { 'max-age': 1200 });
+        setCookie('token', accessToken, { 'max-age': 1200, path: '/' });
         localStorage.setItem('refreshToken', refreshToken);
         return res;
       })
@@ -52,6 +53,7 @@ export const registerUserAction = (email, password, name) => {
           type: GET_REGISTER_FAILED,
           message: err.message
         })
+
       })
       .finally(() => {
         dispatch(inLoader())
@@ -94,7 +96,7 @@ export const authAction = (email, password) => {
       .then(res => {
         const accessToken = res.accessToken.split('Bearer ')[1];
         const refreshToken = res.refreshToken;
-        setCookie('token', accessToken, { 'max-age': 1200 });
+        setCookie('token', accessToken, { 'max-age': 1200, path: '/' });
         localStorage.setItem('refreshToken', refreshToken);
         return res;
       })
@@ -130,9 +132,13 @@ export const updateTokenAction = () => {
       .then(res => {
         const accessToken = res.accessToken.split('Bearer ')[1];
         const refreshToken = res.refreshToken;
-        setCookie('token', accessToken, { 'max-age': 1200 });
+        setCookie('token', accessToken, { 'max-age': 1200, path: '/' });
         localStorage.setItem('refreshToken', refreshToken);
         return res;
+      }).then(res => {
+        if (res && res.success) {
+          dispatch({ type: UPDATE_TOKEN })
+        }
       })
       .finally(() => {
         dispatch(inLoader())

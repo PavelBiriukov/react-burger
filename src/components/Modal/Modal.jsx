@@ -11,6 +11,7 @@ import { LoaderAuth, LoaderIngredients } from '../../utils/Loader/Loader';
 const modalRoot = document.querySelector('#modal');
 
 const Modal = ({ active, onClose, children }) => {
+  const loader = useSelector(store => store.authReducer.loader);
   const load = useSelector(store => store.orderDetailsReduser.loader);
 
   React.useEffect(() => {
@@ -32,7 +33,7 @@ const Modal = ({ active, onClose, children }) => {
         </>
         )
         : (
-          <LoaderAuth>
+          <LoaderAuth loader={loader}>
             <div className={active ? `${stylesModalDetails.container} ${stylesModalDetails.active}` : `${stylesModalDetails.container}`}>
               <button className={`${stylesModalDetails.close} mt-7 mr-5`} onClick={onClose}>
                 <CloseIcon type="primary" />
@@ -48,7 +49,7 @@ const Modal = ({ active, onClose, children }) => {
 
 Modal.propTypes = {
   active: PropTypes.bool,
-  setActive: PropTypes.func,
+  children: PropTypes.element,
   onClose: PropTypes.func
 }
 export default Modal;

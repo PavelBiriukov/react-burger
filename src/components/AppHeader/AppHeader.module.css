@@ -6,11 +6,12 @@
 }
 
 .list {
-  max-width: 1240px;
+  max-width: 1280px;
   margin: 0 auto;
   list-style-type: none;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding-left: 0;
 }
 

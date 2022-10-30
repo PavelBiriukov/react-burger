@@ -1,4 +1,4 @@
-import { GET_AUTH_FAILED, GET_AUTH_SUCCESS, GET_REGISTER_FAILED, GET_REGISTER_SUCCESS, GET_USER_FAILED, GET_USER_SUCCESS, INLOADER, USER_CHANGE_FAILED, USER_CHANGE_SUCCESS, USER_LOGOUT_FAILED, USER_LOGOUT_SUCCESS, USER_RESET_EMAIL_FAILED, USER_RESET_EMAIL_SUCCESS, USER_RESET_FAILED, USER_RESET_SUCCESS } from "../action/authAction";
+import { GET_AUTH_FAILED, GET_AUTH_SUCCESS, GET_REGISTER_FAILED, GET_REGISTER_SUCCESS, GET_USER_FAILED, GET_USER_SUCCESS, INLOADER, UPDATE_TOKEN, USER_CHANGE_FAILED, USER_CHANGE_SUCCESS, USER_LOGOUT_FAILED, USER_LOGOUT_SUCCESS, USER_RESET_EMAIL_FAILED, USER_RESET_EMAIL_SUCCESS, USER_RESET_FAILED, USER_RESET_SUCCESS } from "../action/authAction";
 import { LOADER } from "../action/orderDetailsAction";
 
 const initialState = {
@@ -14,6 +14,12 @@ const initialState = {
 export const authReducer = (state = initialState, action) => {
 
   switch (action.type) {
+    case UPDATE_TOKEN: {
+      return {
+        ...state,
+        inLogin: true
+      }
+    }
     case GET_REGISTER_SUCCESS: {
       return {
         ...state,

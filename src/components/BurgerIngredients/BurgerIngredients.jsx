@@ -4,12 +4,11 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import stylesIngredients from './BurgerIngredients.module.css';
 import CardIngredients from './CardIngredients/CardIngredients';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 
 
-const BurgerIngredients = ({ setActive }) => {
+const BurgerIngredients = () => {
   const [current, setCurrent] = React.useState('one');
   const state = useSelector(store => store.listIgredients.feed);
 
@@ -70,7 +69,7 @@ const BurgerIngredients = ({ setActive }) => {
               <CardIngredients
                 card={card}
                 key={card._id}
-                setActive={setActive} />
+              />
             )
           })}
         </div>
@@ -81,7 +80,7 @@ const BurgerIngredients = ({ setActive }) => {
               <CardIngredients
                 card={card}
                 key={card._id}
-                setActive={setActive} />
+              />
             )
           }
           )}
@@ -93,7 +92,7 @@ const BurgerIngredients = ({ setActive }) => {
               <CardIngredients
                 card={card}
                 key={card._id}
-                setActive={setActive} />
+              />
             )
           })}
         </div>
@@ -102,7 +101,4 @@ const BurgerIngredients = ({ setActive }) => {
   )
 }
 
-BurgerIngredients.propTypes = {
-  setActive: PropTypes.func
-}
 export default React.memo(BurgerIngredients);

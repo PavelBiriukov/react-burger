@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from "./utils";
+import { deleteCookie, getCookie, setCookie } from "./utils";
 
 const baseURL = 'https://norma.nomoreparties.space/api/'
 
@@ -11,9 +11,10 @@ export const checkReponse = (res) => {
         if (err.message === 'jwt malformed' || err.message === 'jwt expired') {
           updateToken(localStorage.getItem('refreshToken'))
           .then(res => {
+            deleteCookie('token');
             const accessToken = res.accessToken.split('Bearer ')[1];
             const refreshToken = res.refreshToken;
-            setCookie('token', accessToken, { 'max-age': 1200 });
+            setCookie('token', accessToken, { 'max-age': 1200, path: '/' });
             localStorage.setItem('refreshToken', refreshToken);
             return res;
           });
@@ -151,3 +152,4 @@ export function updateToken(refreshToken) {
   })
     .then(res => checkReponse(res))
 }
+

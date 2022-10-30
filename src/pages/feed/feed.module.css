@@ -1,0 +1,10 @@
+.feed{
+  display: flex;
+  flex-direction: column;
+}
+.orders {
+  display: flex;
+  gap: 60px;
+}
+
+

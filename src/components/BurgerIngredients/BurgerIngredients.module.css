@@ -20,7 +20,7 @@
 
 .cards {
   scroll-behavior: smooth;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 756px;
 }
 .cardsItem {

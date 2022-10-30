@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import stylesLoader from './Loader.module.css'
-export const LoaderAuth = ({ children }) => {
-  const loader = useSelector(store => store.authReducer.loader);
+export const LoaderAuth = ({ children, loader }) => {
+ 
 
   return (
     <>
