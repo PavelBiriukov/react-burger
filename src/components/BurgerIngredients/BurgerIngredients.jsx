@@ -31,9 +31,9 @@ const BurgerIngredients = ({ setActive }) => {
       setCurrent('three')
     }
   }
+
   useEffect(() => {
     tabRef.current.addEventListener('scroll', scrollMenu)
-    return () => { tabRef.current.removeEventListener('scroll', scrollMenu) }
   }, [])
 
   const buttonHandler = (ref) => {

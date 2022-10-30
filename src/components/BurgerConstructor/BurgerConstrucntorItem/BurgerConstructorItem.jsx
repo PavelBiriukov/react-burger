@@ -59,11 +59,11 @@ const BurgerConstructorItem = ({type, id, image, price, name, index}) => {
   );
 };
 BurgerConstructorItem.propTypes = {
-  type: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired
+  type: PropTypes.string,
+  id: PropTypes.number,
+  image: PropTypes.string,
+  price: PropTypes.number,
+  name: PropTypes.string,
+  index: PropTypes.number
 }
 export default React.memo (BurgerConstructorItem)

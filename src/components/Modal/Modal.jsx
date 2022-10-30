@@ -7,16 +7,16 @@ import stylesModalDetails from './Modal.module.css';
 import ModalOverlay from './ModalOverlay/ModalOverlay';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import Loader from '../utils/Loader/Loader';
+import { LoaderAuth, LoaderIngredients } from '../../utils/Loader/Loader';
 const modalRoot = document.querySelector('#modal');
 
-const Modal = ({ active, setActive, children }) => {
-  const load = useSelector(store => store.orderDetailsReduser.loader)
+const Modal = ({ active, onClose, children }) => {
+  const load = useSelector(store => store.orderDetailsReduser.loader);
 
   React.useEffect(() => {
     const close = (e) => {
       if (e.key === 'Escape') {
-        setActive(false);
+        onClose();
       }
     }
     window.addEventListener('keydown', close);
@@ -24,24 +24,23 @@ const Modal = ({ active, setActive, children }) => {
   }, []);
 
   return ReactDOM.createPortal(
-
     <>
       {load ?
         (<>
-          <Loader/>
-          <ModalOverlay active={active} setActive={setActive} closePopup={() => {}}></ModalOverlay>
-          </>
+          <LoaderIngredients />
+          <ModalOverlay active={active} closePopup={onClose}></ModalOverlay>
+        </>
         )
         : (
-          <>
+          <LoaderAuth>
             <div className={active ? `${stylesModalDetails.container} ${stylesModalDetails.active}` : `${stylesModalDetails.container}`}>
-              <button className={`${stylesModalDetails.close} mt-7 mr-5`} onClick={() => { setActive(false)}}>
+              <button className={`${stylesModalDetails.close} mt-7 mr-5`} onClick={onClose}>
                 <CloseIcon type="primary" />
               </button>
               {children}
             </div>
-            <ModalOverlay active={active} setActive={setActive} closePopup={() => { setActive(false)}}></ModalOverlay>
-          </>)}
+            <ModalOverlay active={active} closePopup={onClose}></ModalOverlay>
+          </LoaderAuth>)}
     </>
     , modalRoot
   )
@@ -49,7 +48,8 @@ const Modal = ({ active, setActive, children }) => {
 
 Modal.propTypes = {
   active: PropTypes.bool,
-  setActive: PropTypes.func
+  setActive: PropTypes.func,
+  onClose: PropTypes.func
 }
 export default Modal;
 

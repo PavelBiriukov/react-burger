@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -12,6 +12,7 @@ import { useDrop } from 'react-dnd';
 import { ADD_INGREDIENT } from '../../services/action/constructorAction';
 import BurgerConstructorItem from './BurgerConstrucntorItem/BurgerConstructorItem';
 import { getOrderAction } from '../../services/action/orderDetailsAction';
+import { useHistory } from 'react-router-dom';
 
 
 const BurgerConstructor = ({ setActive }) => {
@@ -19,9 +20,11 @@ const BurgerConstructor = ({ setActive }) => {
   const ingredients = useSelector(store => store.constructorReducer.feed);
   const allIngredients = useSelector(store => store.constructorReducer.ingredients);
   const bun = useSelector(store => store.constructorReducer.bun);
+  const inLogin = useSelector(store => store.authReducer.inLogin);
   const [total, setTotal] = useState(0);
-  const [, dropTarget] = useDrop({
+  const history = useHistory();
 
+  const [, dropTarget] = useDrop({
     accept: 'ingredients',
     drop(item) {
       dispatch({
@@ -32,18 +35,28 @@ const BurgerConstructor = ({ setActive }) => {
   })
 
 
-  const burgerId = useMemo(() => allIngredients.map((item) => item.card._id), [allIngredients]);
-  const orderDispatch = (id) => {
+  let burgerId = useMemo(() => allIngredients.map((item) => item.card._id), [allIngredients]);
+
+  
+  const orderDispatch = useCallback((id) => {
     dispatch(getOrderAction(id))
-  }
+  }, [dispatch])
 
   useEffect(() => {
-
-    const ingredientsPrice = ingredients.reduce((sum, item) => +sum + item.card.price, 0);
+    const ingredientsPrice = ingredients.reduce((sum, item) => +sum + item.card.price, []);
     const bunPrice = bun[0] ? bun[0].card.price * 2 : 0;
     const totalPrice = bunPrice + ingredientsPrice;
     setTotal(totalPrice)
   }, [ingredients, bun])
+
+  const checkAuthUser = () => {
+    if (!inLogin) {
+      history.push('/login')
+    } else {
+      orderDispatch(burgerId);
+      setActive(true);
+    }
+  }
 
   return (
     <section className={`${stylesConstructor.constructor} mt-25 ml-10`} ref={dropTarget}>
@@ -98,8 +111,7 @@ const BurgerConstructor = ({ setActive }) => {
           size="large"
           disabled={bun.length === 0}
           onClick={() => {
-            setActive(true);
-            orderDispatch(burgerId)
+            checkAuthUser();
           }}>
           Оформить заказ
         </Button>

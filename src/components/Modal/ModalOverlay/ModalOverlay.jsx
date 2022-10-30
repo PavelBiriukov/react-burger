@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const ModalOverlay = ({ active, closePopup }) => {
   return (
     <div className={active ? `${stylesModalOverlay.popup} ${stylesModalOverlay.active}` : `${stylesModalOverlay.popup}`}
-    onClick={() => closePopup()}>
+      onClick={closePopup}>
     </div>)
 }
 
