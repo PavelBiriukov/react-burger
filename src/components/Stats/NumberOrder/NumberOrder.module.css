@@ -1,0 +1,8 @@
+.list {
+  display: flex;
+  gap: 35px;
+}
+.listNumberOrders{
+  list-style-type: none;
+  padding: 0;
+}

@@ -1,0 +1,26 @@
+::-webkit-scrollbar {
+  width: 8px;
+  /* ширина для вертикального скролла */
+  background-color: #2F2F37;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  height: 292px;
+}
+.iconContainer {
+  display: flex;
+  align-items: center;
+}
+.consistItem{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+.price{
+  display: flex;
+  display: flex;
+  gap: 8px;
+  justify-self: end;
+}

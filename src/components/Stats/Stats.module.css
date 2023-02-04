@@ -1,0 +1,18 @@
+.stats{
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  width: 580px;
+}
+.ordersNumberContainer{
+  display: flex;
+  justify-content: space-between;
+  gap: 36px;
+}
+.numberOrders{
+  width: 272px;
+}
+.listNumberOrders{
+  list-style-type: none;
+  padding: 0;
+}
